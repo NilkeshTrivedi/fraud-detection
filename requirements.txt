@@ -1,0 +1,11 @@
+pandas
+numpy
+psycopg2-binary
+sqlalchemy
+python-dotenv
+fastapi
+uvicorn
+scikit-learn
+xgboost
+imbalanced-learn
+pytest
