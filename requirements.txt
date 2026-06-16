@@ -9,3 +9,7 @@ scikit-learn
 xgboost
 imbalanced-learn
 pytest
+xgboost
+imbalanced-learn
+scikit-learn
+joblib
