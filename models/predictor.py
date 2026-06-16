@@ -6,7 +6,6 @@ import logging
 from pathlib import Path
 
 import joblib
-import numpy as np
 import pandas as pd
 
 logger = logging.getLogger(__name__)
@@ -31,27 +30,9 @@ class FraudPredictor:
         logger.info("Model loaded ✅")
 
     def predict(self, transaction: dict) -> dict:
-        """
-        Score a single transaction for fraud probability.
-
-        Args:
-            transaction: Dictionary of transaction features.
-
-        Returns:
-            Dictionary with fraud_probability, is_fraud, risk_level.
-
-        Raises:
-            ValueError: If required features are missing.
-        """
-        # Build feature vector
-        input_df = pd.DataFrame([transaction])
-
-        # Align to training features
-        for col in self.feature_names:
-            if col not in input_df.columns:
-                input_df[col] = 0
-
-        input_df = input_df[self.feature_names]
+        # Build feature vector aligned to training features — all at once
+        input_data = {col: transaction.get(col, 0) for col in self.feature_names}
+        input_df = pd.DataFrame([input_data])
 
         # Scale
         input_scaled = self.scaler.transform(input_df)

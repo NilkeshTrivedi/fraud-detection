@@ -13,3 +13,5 @@ xgboost
 imbalanced-learn
 scikit-learn
 joblib
+pytest
+httpx

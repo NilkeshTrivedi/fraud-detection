@@ -2,28 +2,16 @@
 Pydantic schemas for request/response validation.
 """
 
-from pydantic import BaseModel, Field
 from typing import Optional
+
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class TransactionRequest(BaseModel):
     """Single transaction input for fraud scoring."""
 
-    TransactionAmt: float = Field(..., gt=0, description="Transaction amount in USD")
-    ProductCD: Optional[int] = Field(0, description="Product code")
-    card1: Optional[int] = Field(0, description="Card parameter 1")
-    card2: Optional[float] = Field(0.0, description="Card parameter 2")
-    card3: Optional[float] = Field(0.0, description="Card parameter 3")
-    card5: Optional[float] = Field(0.0, description="Card parameter 5")
-    addr1: Optional[float] = Field(0.0, description="Address parameter 1")
-    addr2: Optional[float] = Field(0.0, description="Address parameter 2")
-    dist1: Optional[float] = Field(0.0, description="Distance parameter 1")
-    TransactionDT: Optional[int] = Field(86400, description="Transaction datetime offset")
-    P_emaildomain: Optional[int] = Field(0, description="Purchaser email domain")
-    R_emaildomain: Optional[int] = Field(0, description="Recipient email domain")
-
-    class Config:
-        json_schema_extra = {
+    model_config = ConfigDict(
+        json_schema_extra={
             "example": {
                 "TransactionAmt": 150.00,
                 "ProductCD": 1,
@@ -39,6 +27,20 @@ class TransactionRequest(BaseModel):
                 "R_emaildomain": 0,
             }
         }
+    )
+
+    TransactionAmt: float = Field(..., gt=0, description="Transaction amount in USD")
+    ProductCD: Optional[int] = Field(0, description="Product code")
+    card1: Optional[int] = Field(0, description="Card parameter 1")
+    card2: Optional[float] = Field(0.0, description="Card parameter 2")
+    card3: Optional[float] = Field(0.0, description="Card parameter 3")
+    card5: Optional[float] = Field(0.0, description="Card parameter 5")
+    addr1: Optional[float] = Field(0.0, description="Address parameter 1")
+    addr2: Optional[float] = Field(0.0, description="Address parameter 2")
+    dist1: Optional[float] = Field(0.0, description="Distance parameter 1")
+    TransactionDT: Optional[int] = Field(86400, description="Transaction datetime offset")
+    P_emaildomain: Optional[int] = Field(0, description="Purchaser email domain")
+    R_emaildomain: Optional[int] = Field(0, description="Recipient email domain")
 
 
 class TransactionResponse(BaseModel):
